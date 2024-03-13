@@ -49,17 +49,17 @@ class ResNet(nn.Module):
         super().__init__()
         self.in_channels = 64
         self.conv1 = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=2, padding=3), #These values need checking
+            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=2, padding=3), 
             nn.BatchNorm2d(num_features=64),
             nn.ReLU()
         )
-        self.pool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1) #These values need checking
+        self.pool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1) 
 
-        self.block0 = self._make_layer(block, 64, layers[0], stride=1) #These stride values need checking
+        self.block0 = self._make_layer(block, 64, layers[0], stride=1) 
         self.block1 = self._make_layer(block, 128, layers[1], stride=2)
         self.block2 = self._make_layer(block, 256, layers[2], stride=2)
         self.block3 = self._make_layer(block, 512, layers[3], stride=2)
-        self.avgpool = nn.AvgPool2d(7, stride=1) #Written on the paper but need to discover what it is
+        self.avgpool = nn.AvgPool2d(7, stride=1)
         self.fc = nn.Linear(512, num_classes)
 
     def _make_layer(self, block, out_channels, blocks, stride=1):
@@ -75,7 +75,7 @@ class ResNet(nn.Module):
         self.in_channels = out_channels
 
         for i in range(1, blocks):
-            layers.append(block(self.in_channels, out_channels)) #Need to discover why the stride is not set to anything else here (why not =2)
+            layers.append(block(self.in_channels, out_channels))
         
         return nn.Sequential(*layers)
     
